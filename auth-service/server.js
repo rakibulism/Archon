@@ -173,8 +173,7 @@ const server = http.createServer(async (req, res) => {
 
     // GET /login — serve the styled login form
     if (req.method === 'GET' && url.pathname === '/login') {
-      // Keep GET behavior as a single decode via URLSearchParams. Validation happens on POST.
-      const rd = url.searchParams.get('rd') ?? '/';
+      const rd = normalizeRedirect(url.searchParams.get('rd'));
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       return res.end(loginPage(encodeURIComponent(rd), null));
     }
